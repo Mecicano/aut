@@ -33,15 +33,15 @@ function CLICK()
     
     game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(args))
 end
-local mob = serv:Channel("FARM MOB")
+local mob = serv:Channel("Farm Mob")
 
-mob:Dropdown("SELECT MOB", {"Akira_DEV Dummy", "Thug" , "KillableDummy" , "SansDummy", "ReflectingDummy" , "BlockingDummy" , "Scorpion"}, function(concac)
+mob:Dropdown("SELECT MOB", {"Akira_DEV Dummy", "Thug" , "KillableDummy" , "SansDummy", "ReflectingDummy" , "BlockingDummy" , "Scorpion", "Umbra"}, function(concac)
     getgenv().mobb = concac
 end)
 
 des = 10
 
-mob:Toggle("FARM MOB", false, function(g)
+mob:Toggle("Farm Mob", false, function(g)
     getgenv().start = g
     function gg()
         pcall(function()
@@ -61,4 +61,385 @@ mob:Toggle("FARM MOB", false, function(g)
     end
 
 
+end)
+mob:Toggle("God mode",false, function(god)
+    getgenv().god = god
+    while getgenv().god do wait()
+        pcall(function()
+            for i, v in pairs(game.Players.LocalPlayer.Character.Values:GetChildren()) do
+                if v.Name == "Block" then
+                v:Destroy()
+                wait(4)
+                game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
+                end
+            end
+        end)
+    end
+end)
+mob:Label("only turn godmode for mob farm cuz its suck")
+local tgls = serv:Channel("Farm Item")
+
+local vu = game:GetService("VirtualUser")
+    game:GetService("Players").LocalPlayer.Idled:connect(function()
+            vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+            wait(1)
+            vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    end)
+
+tgls:Button("TP To Safe Zone",function()
+    Instance.new("Part",game:GetService("Workspace").ServerInformation)
+    for i,v in pairs(game:GetService("Workspace").ServerInformation:GetChildren()) do
+        if v.Name == "Part" then
+            v.CFrame = CFrame.new(294.95635986328, 2569.0732421875, -0.31307902932167)
+            v.Size = Vector3.new(60, 3, 65)
+            v.Position = Vector3.new(294.956, 2669.07, -1.31308)
+            v.Anchored = true
+        end
+    end
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(294.955994, 2673.07007, -1.31307995, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+end)
+
+
+tgls:Toggle("Just Turn This On When Use ItemFarm",false, function(b)
+    getgenv().noclip = b
+    game:GetService('RunService').Stepped:connect(function()
+        if getgenv().noclip then
+            game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+        end
+    end)
+end)
+
+function PRESS()
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
+end
+
+function CLICK()
+    local args = {
+        [1] = "KEY",
+        [2] = "LMB"
+    }
+    
+    game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(args))
+    
+    
+    local args = {
+        [1] = "LMB"
+    }
+    
+    game:GetService("ReplicatedStorage").Remotes.InputFunc:InvokeServer(unpack(args))
+    
+    
+    local args = {
+        [1] = "KEY",
+        [2] = "END-LMB"
+    }
+    
+    game:GetService("ReplicatedStorage").Remotes.Input:FireServer(unpack(args))
+end
+  
+local plr = game.Players.LocalPlayer
+
+tgls:Toggle("Meteor Farm",false, function(bool)
+    getgenv().FARM = bool
+function concac()
+    for _,x in pairs(game:GetService("Workspace").ItemSpawns.Chests:GetChildren()) do
+        for i,v in pairs(game:GetService("Workspace").ItemSpawns.Meteors:GetChildren()) do
+            if v:FindFirstChild("Meteor") and not x:FindFirstChild("Chest") then
+                repeat
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame * CFrame.Angles(math.rad(90), 0, 0) - Vector3.new(0,7,0)
+                    PRESS()
+                until not v:FindFirstChild("Meteor") or getgenv().FARM
+            end
+        end
+    end
+end
+
+while getgenv().FARM do wait(0.1)
+    concac()
+end
+end)
+
+tgls:Toggle("Chest Farm",false, function(bool)
+    getgenv().FARM1 = bool
+function cc()
+    for i,v in pairs(game:GetService("Workspace").ItemSpawns.Chests:GetChildren()) do
+        if v:FindFirstChild("Chest") then
+            repeat
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame * CFrame.Angles(math.rad(90), 0, 0) - Vector3.new(0,7,0)
+                PRESS()
+            until not v:FindFirstChild("Chest") or getgenv().FARM1
+        end
+    end
+end
+
+while getgenv().FARM1 do wait(0.1)
+    cc()
+end
+end)
+
+tgls:Toggle("Item Farm",false, function(bool)
+    getgenv().FARM2 = bool
+        function c1c()
+            for i,v in pairs(game:GetService("Workspace").ItemSpawns.StandardItems.SpawnLocation:GetChildren()) do
+                if v:FindFirstChild("Dragon ball") or v:FindFirstChild("Ben 10") then
+                    repeat
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame * CFrame.Angles(math.rad(90), 0, 0) - Vector3.new(0,7,0)
+                        PRESS()
+                    until not v:FindFirstChild("Handle") or not getgenv().FARM2
+                end
+            end 
+        end
+    
+    while getgenv().FARM2 do wait(0.1) 
+        c1c()
+    end
+    end)
+
+tgls:Toggle("SandDebris Farm",false, function(bool)
+    getgenv().Hard = bool
+function hard()
+    for i,v in pairs(game:GetService("Workspace").ItemSpawns["Sand Debris"]:GetChildren()) do
+        if v:FindFirstChild("SandDebris") then
+            repeat
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.CFrame * CFrame.Angles(math.rad(90), 0, 0) - Vector3.new(0,7,0)
+                PRESS()
+            until not v:FindFirstChild("SandDebris") or not getgenv().Hard
+        end
+    end
+end
+
+while getgenv().Hard do wait(0.1)
+    hard()
+end
+end)
+
+tgls:Textbox("Webhook", "Type here!", true, function(t)
+    getgenv().Webhook = t
+end)
+
+tgls:Label("Paste webhook and press Enter")
+
+tgls:Toggle("Noti Item", false, function(t)
+    getgenv().noti = t
+    game.Players.LocalPlayer.Backpack.ChildAdded:Connect(function(v)
+        if getgenv().noti then
+            spawn(function()
+                pcall(function()
+                    local url = getgenv().Webhook
+                    local data = {
+                    ["content"] = "@everyone",
+                    ["embeds"] = {
+                        {
+                            ["title"] = "ITEM U GET",
+                            ["description"] = "Username: " .. game.Players.LocalPlayer.Name.. "\n\nItem: " ..  v.Name,
+                            ["type"] = "rich",
+                            ["color"] = tonumber(0x7269da),
+                        }
+                    }
+                    }
+                    local newdata = game:GetService("HttpService"):JSONEncode(data)
+                
+                    local headers = {
+                    ["content-type"] = "application/json"
+                    }
+                    request = http_request or request or HttpPost or syn.request
+                    local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
+                    request(abcdef)
+                end)
+            end)
+        end
+    end)
+end)
+
+tgls:Button("Test Webhook", function()
+                local url = getgenv().Webhook
+                local data = {
+                ["content"] = "@everyone",
+                ["embeds"] = {
+                    {
+                        ["title"] = "Sussy Among us cock",
+                        ["description"] = "Username: " .. game.Players.LocalPlayer.Name.. "\n\nTEST",
+                        ["type"] = "rich",
+                        ["color"] = tonumber(0x7269da),
+                    }
+                }
+                }
+                local newdata = game:GetService("HttpService"):JSONEncode(data)
+            
+                local headers = {
+                ["content-type"] = "application/json"
+                }
+                request = http_request or request or HttpPost or syn.request
+                local abcdef = {Url = url, Body = newdata, Method = "POST", Headers = headers}
+                request(abcdef)
+end)
+local skill = serv:Channel("Auto Skill")
+
+skill:Toggle("E",false, function(E)
+    getgenv().E = E
+    while getgenv().E do wait(0.1)
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
+            wait(getgenv().hold1)
+        game:GetService("VirtualInputManager"):SendKeyEvent(false, "E", false, game)
+    end
+end)
+
+Dame = 10
+
+skill:Slider("Hold", 0, Dame ,0, function(hold)
+    getgenv().hold1 = hold
+end)
+
+skill:Toggle("R",false, function(R)
+    getgenv().R = R
+    while getgenv().R do wait(0.1)
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, "R", false, game)
+            wait(getgenv().hold2)
+        game:GetService("VirtualInputManager"):SendKeyEvent(false, "R", false, game)
+    end
+end)
+
+Dame = 10
+
+skill:Slider("Hold", 0, Dame , 0, function(hold)
+    getgenv().hold2 = hold
+end)
+
+skill:Toggle("T",false, function()
+    getgenv().T = T
+    while getgenv().T do wait(0.1)
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, "T", false, game)
+            wait(getgenv().hold3)
+        game:GetService("VirtualInputManager"):SendKeyEvent(false, "T", false, game)
+    end
+end)
+
+Dame = 10
+
+skill:Slider("Hold", 0, Dame , 0, function(hold)
+    getgenv().hold3 = hold
+end)
+
+skill:Toggle("F",false, function(F)
+    getgenv().F = F
+    while getgenv().F do wait(0.1)
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, "F", false, game)
+            wait(getgenv().hold4)
+        game:GetService("VirtualInputManager"):SendKeyEvent(false, "F", false, game)
+    end
+end)
+
+Dame = 10
+
+skill:Slider("Hold", 0, Dame , 0, function(hold)
+    getgenv().hold4 = hold
+end)
+
+skill:Toggle("Y",false, function(Y)
+    getgenv().Y = Y
+    while getgenv().Y do wait(0.1)
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, "Y", false, game)
+            wait(getgenv().hold5)
+        game:GetService("VirtualInputManager"):SendKeyEvent(false, "Y", false, game)
+    end
+end)
+
+Dame = 10
+
+skill:Slider("Hold", 0, Dame , 0, function(hold)
+    getgenv().hold5 = hold
+end)
+
+skill:Toggle("G",false, function(G)
+    getgenv().G = G
+    while getgenv().G do wait(0.1)
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, "G", false, game)
+            wait(getgenv().hold6)
+        game:GetService("VirtualInputManager"):SendKeyEvent(false, "G", false, game)
+    end
+end)
+
+Dame = 10
+
+skill:Slider("Hold", 0, Dame , 0, function(hold)
+    getgenv().hold6 = hold
+end)
+
+skill:Toggle("H",false, function(H)
+    getgenv().H = H
+    while getgenv().H do wait(0.1)
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, "H", false, game)
+            wait(getgenv().hold7)
+        game:GetService("VirtualInputManager"):SendKeyEvent(false, "H", false, game)
+    end
+end)
+
+Dame = 10
+
+skill:Slider("Hold", 0, Dame , 0, function(hold)
+    getgenv().hold7 = hold
+end)
+
+skill:Toggle("V",false, function(V)
+    getgenv().V = V
+    while getgenv().V do wait(0.1)
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, "V", false, game)
+            wait(getgenv().hold8)
+        game:GetService("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
+    end
+end)
+
+Dame = 10
+
+skill:Slider("Hold", 0, Dame , 0, function(hold)
+    getgenv().hold8 = hold
+end)
+
+skill:Toggle("B",false, function(B)
+    getgenv().B = B
+    while getgenv().B do wait(0.1)
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, "B", false, game)
+            wait(getgenv().hold9)
+        game:GetService("VirtualInputManager"):SendKeyEvent(false, "B", false, game)
+    end
+end)
+
+Dame = 10
+
+skill:Slider("Hold", 0, Dame , 0, function(hold)
+    getgenv().hold9 = hold
+end)
+
+skill:Toggle("U",false, function(U)
+    getgenv().U = U
+    while getgenv().U do wait(0.1)
+        game:GetService("VirtualInputManager"):SendKeyEvent(true, "U", false, game)
+            wait(getgenv().hold10)
+        game:GetService("VirtualInputManager"):SendKeyEvent(false, "U", false, game)
+    end
+end)
+
+Dame = 10
+
+skill:Slider("Hold", 0, Dame , 0, function(hold)
+    getgenv().hold10 = hold
+end)
+
+local tp = serv:Channel("Teleport")
+
+getgenv().tpmob = {}
+for i,v in pairs(game:GetService("Workspace").NPCS:GetChildren()) do
+    table.insert(getgenv().tpmob ,v.Name)
+end
+
+tp:Dropdown("Select NPC", getgenv().tpmob, function(a)
+    tpmob1 = a
+end)
+
+tpmob1 = ""
+
+
+tp:Button("Tp NPC" , function()
+    plr3 = game:GetService("Workspace").NPCS:FindFirstChild(tpmob1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = plr3.HumanoidRootPart.CFrame
 end)
